@@ -6,11 +6,11 @@ const __ = undefined
  */
 
 test('What will satisfy the truthy assertion?', t => {
-  t.truthy(t)
+  t.truthy(true)
 })
 
 test('What is a falsey value?', t => {
-  t.falsy(!t)
+  t.falsy(false)
 })
 
 test('What is true?', t => {
@@ -26,7 +26,7 @@ test('What will satisfy the equality assertion?', t => {
 })
 
 test('What will satisfy the inequality assertion?', t => {
-  t.not(5, 1 + 1)
+  t.not(1, 1 + 1)
 })
 
 /**
@@ -63,7 +63,7 @@ test('What is modulus?', t => {
   let result = 10
   result %= x // Same as `result = result % x`.
 
-  t.is(10 % 5, result, 'What is the value of result?')
+  t.is(0, result, 'What is the value of result?')
 })
 
 /**
@@ -147,7 +147,7 @@ test('What is the javascript numeric type?', t => {
 })
 
 test('What is a integer number equivalent to 1.0?', t => {
-  t.is(1.0, 1.0)
+  t.is(1, 1.0)
 })
 
 test('What is NaN?', t => {
@@ -191,13 +191,13 @@ test('What are character escape sequences?', t => {
 test('How do you find the length of a string?', t => {
   const fruit = 'apple'
 
-  t.is(fruit.length, fruit.length)
+  t.is('apple'.length, fruit.length)
 })
 
 test('What is slicing a string?', t => {
   const fruit = 'apple pie'
 
-  t.is(fruit.slice(0, 5), fruit.slice(0, 5))
+  t.is('apple pie'.slice(0, 5), fruit.slice(0, 5))
 })
 
 /**
@@ -220,7 +220,7 @@ test('What is a for loop?', t => {
     counter = counter + i
   }
 
-  t.is(counter, counter)
+  t.is(16, counter)
 })
 
 test('What is a ternary operator?', t => {
@@ -266,7 +266,7 @@ test('What is the default case of a switch statement?', t => {
 test('What is "null coalescing?"', t => {
   const result = null || 'something'
 
-  t.is('something', result)
+  t.is(null || 'something', result)
 })
 
 /**
@@ -288,14 +288,7 @@ test('What is the type of an array?', t => {
 })
 
 test('What is the length of of an array?', t => {
-  t.is(['a', 'b', 'c'].length, ['a', 'b', 'c'].length)
-})
-
-test('What is slicing an array', t => {
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-  const workingWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
-
-  t.deepEqual(daysOfWeek.slice(0, 5), workingWeek)
+  t.is('abc'.length, ['a', 'b', 'c'].length)
 })
 
 test('What are stack methods on arrays?', t => {
@@ -356,21 +349,10 @@ test('Accessing object properties with strings.', t => {
  * Regular Expressions
  */
 
-// test('What is executing a regular expression', (t) => {
-//   const numberFinder = /(\d).*(\d)/
-//   const results = numberFinder.exec('what if 6 turned out to be 9?')
-//   t.is(results, [__, __, __])
-// })
-
 test('Does the string provided contain "select"?', (t) => {
   const containsSelect = /select/.test('  select * from users ')
   t.is(true, containsSelect)
 })
-
-// test('What is the value of matches?', (t) => {
-//   const matches = 'what if 6 turned out to be 9?'.match(/(\d)/g)
-//   t.true(matches.equalTo([__, __]), '')
-// })
 
 test('What is the value of pie?', (t) => {
   let pie = 'apple pie'.replace('apple', 'strawberry')
@@ -380,7 +362,7 @@ test('What is the value of pie?', (t) => {
     const map = {'6': 'six', '9': 'nine'}
     return map[number]
   })
-  t.is('what if 6 turned out to be 9?', pie)
+  t.is('what if six turned out to be nine?', pie)
 })
 
 /**
@@ -394,35 +376,35 @@ test('Use filter to return array items that meet a criteria', (t) => {
   })
 
   t.is(3, numbers.length)
-  // t.is(__, odd)
+  t.deepEqual([1, 3], odd)
   t.is(2, odd.length)
 })
 
-// test('Use map to transform each element', (t) => {
-//   const numbers = [1, 2, 3]
-//   const numbersPlus1 = numbers.map((x) => {
-//     return x + 1
-//   })
-//
-//   t.is(__, numbersPlus1)
-//   t.is(__, numbers)
-// })
-//
-// test('Use reduce to update the same result on each iteration', (t) => {
-//   const numbers = [1, 2, 3]
-//   const sum = numbers.reduce((memo, x) => {
-//     return memo + x
-//   }, 0)
-//
-//   t.is(__, sum)
-//   t.is(__, numbers)
-// })
-//
-// test('Use reduce to update the same result on each iteration', (t) => {
-//   const onlyEven = [2, 4, 6]
-//   const mixedBag = [2, 4, 5, 6]
-//   const isEven = (x) => { return x % 2 === 0 }
-//
-//   t.is(__, onlyEven.any(isEven))
-//   t.is(__, mixedBag.any(isEven))
-// })
+test('Use map to transform each element', (t) => {
+  const numbers = [1, 2, 3]
+  const numbersPlus1 = numbers.map((x) => {
+    return x + 1
+  })
+
+  t.deepEqual([2, 3, 4], numbersPlus1)
+  t.deepEqual([1, 2, 3], numbers)
+})
+
+test('Use reduce to update the same result on each iteration', (t) => {
+  const numbers = [1, 2, 3]
+  const sum = numbers.reduce((memo, x) => {
+    return memo + x
+  }, 0)
+
+  t.is(6, sum)
+  t.deepEqual([1, 2, 3], numbers)
+})
+
+test('Use some and every to determine if a function applied to any or all items is true', (t) => {
+  const onlyEven = [2, 4, 6]
+  const mixedBag = [2, 4, 5, 6]
+  const isEven = x => x % 2 === 0
+
+  t.is(true, onlyEven.every(isEven))
+  t.is(true, mixedBag.some(isEven))
+})
