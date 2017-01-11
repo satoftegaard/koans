@@ -6,7 +6,7 @@ const __ = undefined
  */
 
 test('What will satisfy the truthy assertion?', t => {
-  t.truthy(t)
+  t.truthy(true)
 })
 
 test('What is a falsey value?', t => {
@@ -26,7 +26,7 @@ test('What will satisfy the equality assertion?', t => {
 })
 
 test('What will satisfy the inequality assertion?', t => {
-  t.not(0, 1 + 1)
+  t.not(1, 1 + 1)
 })
 
 /**
@@ -91,13 +91,13 @@ test('What is equality with type coercion?', t => {
 test('What is the truthyness of positive numbers?', t => {
   const oneIsTruthy = !!1
 
-  t.is(true, oneIsTruthy)
+  t.is(!!1, oneIsTruthy)
 })
 
 test('What is the truthyness of negative numbers?', t => {
   const negativeOneIsTruthy = !!-1
 
-  t.is(true, negativeOneIsTruthy)
+  t.is(!!-1, negativeOneIsTruthy)
 })
 
 test('What is the truthyness of zero?', t => {
@@ -147,7 +147,7 @@ test('What is the javascript numeric type?', t => {
 })
 
 test('What is a integer number equivalent to 1.0?', t => {
-  t.is(1.0, 1.0)
+  t.is(1, 1.0)
 })
 
 test('What is NaN?', t => {
@@ -191,13 +191,13 @@ test('What are character escape sequences?', t => {
 test('How do you find the length of a string?', t => {
   const fruit = 'apple'
 
-  t.is(5, fruit.length)
+  t.is('apple'.length, fruit.length)
 })
 
 test('What is slicing a string?', t => {
   const fruit = 'apple pie'
 
-  t.is('apple', fruit.slice(0, 5))
+  t.is('apple pie'.slice(0, 5), fruit.slice(0, 5))
 })
 
 /**
@@ -266,7 +266,7 @@ test('What is the default case of a switch statement?', t => {
 test('What is "null coalescing?"', t => {
   const result = null || 'something'
 
-  t.is('something', result)
+  t.is(null || 'something', result)
 })
 
 /**
@@ -288,7 +288,7 @@ test('What is the type of an array?', t => {
 })
 
 test('What is the length of of an array?', t => {
-  t.is(3, ['a', 'b', 'c'].length)
+  t.is('abc'.length, ['a', 'b', 'c'].length)
 })
 
 test('What are stack methods on arrays?', t => {
@@ -355,14 +355,14 @@ test('Does the string provided contain "select"?', (t) => {
 })
 
 test('What is the value of pie?', (t) => {
-  const pie = 'apple pie'.replace('apple', 'strawberry')
+  let pie = 'apple pie'.replace('apple', 'strawberry')
   t.is('strawberry pie', pie)
 
-  // pie = 'what if 6 turned out to be 9?'.replace(/\d/g, function (number) { // the second parameter can be a string or a function
-  //   const map = {'6': 'six', '9': 'nine'}
-  //   return map[number]
-  // })
-  // t.is(__, pie)
+  pie = 'what if 6 turned out to be 9?'.replace(/\d/g, function (number) { // the second parameter can be a string or a function
+    const map = {'6': 'six', '9': 'nine'}
+    return map[number]
+  })
+  t.is('what if six turned out to be nine?', pie)
 })
 
 /**
